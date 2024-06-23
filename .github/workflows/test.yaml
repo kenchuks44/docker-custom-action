@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       issues: write
-      pull_requests: write
+      pull-requests: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
@@ -16,5 +16,5 @@ jobs:
       - name: Post PR Comment
         uses: ./
         with:
-          gh_token: ${{ secrete.GH_TOKEN }}
+          gh_token: ${{ secrets.GH_TOKEN }}
           giphy_api_key: ${{ secrets.GIPHY_API_KEY }}
