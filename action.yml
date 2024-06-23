@@ -4,7 +4,7 @@ inputs:
   gh_token:
     description: 'Github Token'
     required: true
-  github_api_key:
+  giphy_api_key:
     description: 'Giphy API key'
     required: true
 
@@ -14,4 +14,3 @@ runs:
   args:
     - ${{ inputs.gh_token }}
     - ${{ inputs.giphy_api_key }}
-    
