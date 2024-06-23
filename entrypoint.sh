@@ -17,16 +17,10 @@ gif_url=$(echo "$giphy_response" | jq --raw-output .data.images.downsized.url)
 echo "GIPHY_URL - $gif_url"
 
 # Create a comment with the GIF on the PR
-comment_response=$(curl -L -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization: bearer $GH_TOKEN" \
+comment_response=$(curl -L -X POST -H "Authorization: bearer $GH_TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you \n ![GIF]($gif_url)\"}" \
+  -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you for your contributions! \n ![GIF]($gif_url)\"}" \
   "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
 
-# Check if the comment was successfully created
-if [ "$comment_response" -ne 201 ]; then
-  echo "Error creating comment on GitHub: HTTP status $comment_response"
-  exit 1
-fi
-
-echo "Comment successfully created."
+comment_url=$(echo "$comment_response" | jq --raw-output .html_url)
