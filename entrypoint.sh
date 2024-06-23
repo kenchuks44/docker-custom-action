@@ -17,7 +17,7 @@ gif_url=$(echo "$giphy_response" | jq --raw-output .data.images.downsized.url)
 echo "GIPHY_URL - $gif_url"
 
 # Create a comment with the GIF on the PR
-comment_response=$(curl -L -X POST -H "Authorization: bearer $GH_TOKEN" \
+comment_response=$(curl -Lv -X POST -H "Authorization: bearer $GH_TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you for your contributions! \n ![GIF]($gif_url)\"}" \
