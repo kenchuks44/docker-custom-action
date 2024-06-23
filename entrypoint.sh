@@ -18,7 +18,7 @@ echo "GIPHY_URL - $gif_url"
 
 # Create a comment with the GIF on the PR
 comment_response=$(curl -sX POST -H "Authorization: token $GH_TOKEN" \
-  -H "Accept: application/vnd.github+json" \
+  -H "Accept: application/vnd.github.v3+json" \
   -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you \n ![GIF]($gif_url)\"}" \
   "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
 
