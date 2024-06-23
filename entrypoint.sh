@@ -20,6 +20,7 @@ echo "GIPHY_URL - $gif_url"
 comment_response=$(curl -Lv -X POST -H "Authorization: bearer $GH_TOKEN" \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
+  -H "Content-Type: application/json" \
   -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you for your contributions! \n ![GIF]($gif_url)\"}" \
   "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
 
