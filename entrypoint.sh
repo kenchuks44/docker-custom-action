@@ -9,7 +9,7 @@ pull_request_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
 echo "PR Number - $pull_request_number"
 
 # Fetch a random GIF with Giphy API
-giphy_response=$(curl -s "https://api.giphy.com/v1/gifs/random?api_key=$GIPHY_API_KEY&tag=&rating=g")
+giphy_response=$(curl -s "https://api.giphy.com/v1/gifs/random?api_key=$GIPHY_API_KEY&tag=thank%20you&rating=g")
 echo "Giphy Response - $giphy_response"
 
 # Extract GIF URL from Giphy response
@@ -23,5 +23,10 @@ comment_response=$(curl -L -s -o /dev/null -w "%{http_code}" -X POST -H "Authori
   -d "{\"body\": \"### PR - #$pull_request_number. \n ### Thank you \n ![GIF]($gif_url)\"}" \
   "https://api.github.com/repos/$GITHUB_REPOSITORY/issues/$pull_request_number/comments")
 
-# Extract the comment URL from the response
-comment_url=$(echo "$comment_response" | jq --raw-output .html_url)
+# Check if the comment was successfully created
+if [ "$comment_response" -ne 201 ]; then
+  echo "Error creating comment on GitHub: HTTP status $comment_response"
+  exit 1
+fi
+
+echo "Comment successfully created."
