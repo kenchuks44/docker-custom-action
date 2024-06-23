@@ -1,0 +1,17 @@
+name: 'Giphy PR Comment'
+description: 'Add a giphy GIF comment to new PRs'
+inputs:
+  gh_token:
+    description: 'Github Token'
+    required: true
+  github_api_key:
+    description: 'Giphy API key'
+    required: true
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.gh_token }}
+    - ${{ inputs.giphy_api_key }}
+    
